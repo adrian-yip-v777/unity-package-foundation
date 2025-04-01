@@ -1,6 +1,6 @@
 using System;
 
-namespace AYip.Foundations
+namespace vz777.Foundations
 {
     /// <summary>
     /// A common, basic disposing handling for an object.
