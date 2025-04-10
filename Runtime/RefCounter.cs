@@ -1,7 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using UnityEngine.Events;
+using UnityEngine;
 
 namespace vz777.Foundations
 {
@@ -18,12 +18,7 @@ namespace vz777.Foundations
         /// <summary>
         /// Used to cancel the ref count checking.
         /// </summary>
-        protected CancellationTokenSource _cts;
-        
-        /// <summary>
-        /// Since RefCounter can be used on multiple threads, it's necessary to lock the cts in case of race condition.
-        /// </summary>
-        private readonly object _ctsLock = new();
+        protected CancellationTokenSource cts;
         
         protected RefCounter(T instance, int lifeTime = 1)
         {
@@ -41,12 +36,18 @@ namespace vz777.Foundations
         /// It determines how many frames it will wait for resource release checking.
         /// </summary>
         public int Lifetime { get; }
-        
+
+        protected override void DisposeManagedResources()
+        {
+            cts?.Dispose();
+            cts = null;
+        }
+
         /// <summary>
         /// Register to use the reference, please invoke the Complete action after use.
         /// </summary>
         /// <returns></returns>
-        public (T instance, UnityAction CompleteRefUse) RegisterToUse()
+        public (T instance, Action CompleteRefUse) RegisterToUse()
         {
             RefCount++;
             return (instance, CompleteRefUse: CompleteTask);
@@ -57,53 +58,54 @@ namespace vz777.Foundations
         /// </summary>
         public void CompleteTask()
         {
-            lock (_ctsLock)
+            if (IsDisposed)
             {
-                RefCount--;
-                _cts?.Cancel();
+                Debug.LogWarning("Completing a ref counter that has been disposed.");
+                return;
             }
-            ReleaseResourceCheck();
+            
+            RefCount--;
+            
+            // Reset the dispose timer.
+            cts?.Cancel();
+            cts = new CancellationTokenSource();
+            
+            StartDisposeTimer();
         }
 
-        protected virtual async Task ReleaseResourceCheck()
+        /// <summary>
+        /// Start a timer for disposing this wrapper and releasing the target resource.
+        /// </summary>
+        protected virtual async Task StartDisposeTimer()
         {
-            var frame = 0;
+            var frameCount = 0;
 
             try
             {
-                while (frame++ >= Lifetime)
+                while (frameCount++ < Lifetime)
                 {
                     await Task.Yield();
 
-                    lock (_ctsLock)
-                    {
-                        if (_cts is { IsCancellationRequested: true })
-                            throw new OperationCanceledException(_cts.Token);
-                    }
+                    // Handle manually dispose case.
+                    if (IsDisposed) return;
+                    
+                    // Handle cancel case.
+                    if (cts is { IsCancellationRequested: true })
+                        throw new OperationCanceledException(cts.Token);
                 }
 
-                lock (_ctsLock)
-                {
-                    if (RefCount > 0) return;
-                    ReleaseInstance();
-                    instance = default;
-                    Dispose();
-                }
+                // If there is ref count left, do nothing.
+                if (RefCount > 0) return;
+                
+                // If there is no ref count left, dispose this wrapper.
+                Dispose();
             }
             catch (OperationCanceledException) { }
             finally
             {
-                lock (_ctsLock)
-                {
-                    _cts?.Dispose();
-                    _cts = null;
-                }
+                cts?.Dispose();
+                cts = null;
             }
         }
-
-        /// <summary>
-        /// Handle your release method.
-        /// </summary>
-        protected abstract void ReleaseInstance();
     }
 }
