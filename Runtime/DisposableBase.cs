@@ -32,13 +32,13 @@ namespace vz777.Foundations
         }
 
         /// <summary>
-        /// Dispose managed resources
+        /// Release unmanaged resources here (if any)
+        /// e.g., native handles, memory allocated via Marshal, etc.
         /// </summary>
         protected virtual void DisposeUnManagedResources() { }
 
         /// <summary>
-        /// Release unmanaged resources here (if any)
-        /// e.g., native handles, memory allocated via Marshal, etc.
+        /// Dispose managed resources
         /// </summary>
         protected virtual void DisposeManagedResources() { }
     }
