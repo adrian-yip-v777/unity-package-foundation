@@ -6,7 +6,7 @@ It is a foundational package for all the other packages. It includes some useful
 #### Why we need this?
 RefCount type is designed for managing runtime resources like Texture2D or RenderTexture when they have been passing around through an event bus.
 
-Let's say we keep creating a Texture2D object or RenderTexture during runtime. It is still manageable if we need where is the process ends, then we can execute the code below to release the resource.
+Let's say we keep creating a Texture2D object or RenderTexture during runtime. It is still manageable if we know where is the process ends, then we manually release the resource.
 ```C#
 while (true)
 {
@@ -26,13 +26,15 @@ while (true)
     eventBus.Publish (new FooEvent (myTexture2D));
     
     // Still safe!
-    // With synchronized handlers, the publish function will ends only if all handlers are ended.
+    // With all synchronized handlers, the publish function will only ends if all handlers are executed.
     Object.Destroy(myTexture2D);
     myTexture2D = null;
     
     // Memory leak!
-    // If one of the subscribers' handlers is asynchroized or a Unity's coroutine, and will accessing the resource.
-    // 1. Releasing the resource here will throw an exception when accessing the resource. 
+    // Assume that one of the subscribed handlers is asynchronous or a Unity's coroutine
+    // It waits for unknown number of frames then accessing the resource, we will then have two outcomes:
+    
+    // 1. Releasing the resource here will throw an exception after a few frames when it accesses the resource. 
     // 2. Not releasing the resource here will cause memory leaking.
 }
 ```
@@ -47,9 +49,9 @@ var myTexture2DRef = new UnityRefCounter<Texture2D>(myTexture2D);
 // Publish the event with the wrapper instead.
 eventBus.Publish (new FooEvent(myTexture2DRef));
 
-// Say goodbye to your myTexture2D, because it's unmanageable now after the event publish.
+// Say goodbye to your myTexture2D, because it's unmanageable now after publishing the event.
 ```
-In any subscribers:
+In any event handler:
 ```C#
 // Get the ref counter from the event data.
 var myTexture2DRefCounter = eventData.MyTexture2DRef;
@@ -73,4 +75,4 @@ var ref1 = new UnityRefCounter<Texture2D>(myTexture2D, 2);
 var ref2 = new UnityRefCounter<Texture2D>(myTexture2D, lifeTime: 5);
 var ref3 = new UnityRefCounter<Texture2D>(myTexture2D, lifeTime: 10);
 ```
-I guess it is pretty much like the [Memory Allocator](https://docs.unity3d.com/Packages/com.unity.collections@2.6/manual/allocator-overview.html) of `Unity's JobSystem` if you are familiar with it, where the `Allocator.TempJob` lives for 4 frames before it's cleaning up.  
+I guess it is pretty much like the [Memory Allocator](https://docs.unity3d.com/Packages/com.unity.collections@2.6/manual/allocator-overview.html) of `Unity's JobSystem` if you are familiar with it, where the `Allocator.TempJob` lives for 4 frames before it gets cleaned up.  
