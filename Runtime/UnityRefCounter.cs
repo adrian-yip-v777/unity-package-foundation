@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace AYip.Foundations
+namespace vz777.Foundations
 {
     /// <summary>
     /// Responsible for counting reference for Unity's object, it will destroy the instance if there is no reference left. 
