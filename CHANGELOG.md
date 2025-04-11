@@ -1,4 +1,7 @@
 # Changelog
+## 0.2.2
+- Added an extension function to Transform `GetScenePath()`.
+
 ## 0.2.1
 - Fixed a bug of ref check not waiting at all
 - Removed thread-safe lock since it doesn't support multi-threading at the moment.
