@@ -1,4 +1,7 @@
 # Changelog
+## 0.2.2-fork.2
+- Fixed editor scripts being built then throwing exceptions.
+
 ## 0.2.2-fork.1
 - Added an "**Export gitignore files tool**"
 
