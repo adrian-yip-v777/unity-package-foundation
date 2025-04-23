@@ -2,7 +2,9 @@
     "name": "vz777.Foundation.Editor",
     "rootNamespace": "vz777.Foundation.Editor",
     "references": [],
-    "includePlatforms": [],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
