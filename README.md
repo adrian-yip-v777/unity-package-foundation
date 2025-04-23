@@ -1,4 +1,4 @@
-# Visionaries 777 Foundation (forked from [AYip's Foundation](https://github.com/adrianyip-1222/ayip-package-foundation))
+# Visionaries 777 Foundation
 It is a foundational package for all the other packages. It includes some useful shared, common features and types.
 
 ## Features
