@@ -20,7 +20,7 @@ namespace vz777.Foundation.Editor
         private string _searchQuery = "";
         private Label _noFilesLabel;
 
-        [MenuItem("Tools/Export .gitignore files")]
+        [MenuItem("Tools/vz777/Export .gitignore files")]
         public static void ShowWindow()
         {
             var window = GetWindow<ExportGitIgnoreFilesTool>("Export .gitignore files Tool");
