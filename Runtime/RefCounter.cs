@@ -76,36 +76,39 @@ namespace vz777.Foundations
         /// <summary>
         /// Start a timer for disposing this wrapper and releasing the target resource.
         /// </summary>
-        protected virtual async Task StartDisposeTimer()
+        protected virtual void StartDisposeTimer()
         {
-            var frameCount = 0;
-
-            try
+            Task.Run(async () =>
             {
-                while (frameCount++ < Lifetime)
+                var frameCount = 0;
+
+                try
                 {
-                    await Task.Yield();
+                    while (frameCount++ < Lifetime)
+                    {
+                        await Task.Yield();
 
-                    // Handle manually dispose case.
-                    if (IsDisposed) return;
+                        // Handle manually dispose case.
+                        if (IsDisposed) return;
                     
-                    // Handle cancel case.
-                    if (cts is { IsCancellationRequested: true })
-                        throw new OperationCanceledException(cts.Token);
-                }
+                        // Handle cancel case.
+                        if (cts is { IsCancellationRequested: true })
+                            throw new OperationCanceledException(cts.Token);
+                    }
 
-                // If there is ref count left, do nothing.
-                if (RefCount > 0) return;
+                    // If there is ref count left, do nothing.
+                    if (RefCount > 0) return;
                 
-                // If there is no ref count left, dispose this wrapper.
-                Dispose();
-            }
-            catch (OperationCanceledException) { }
-            finally
-            {
-                cts?.Dispose();
-                cts = null;
-            }
+                    // If there is no ref count left, dispose this wrapper.
+                    Dispose();
+                }
+                catch (OperationCanceledException) { }
+                finally
+                {
+                    cts?.Dispose();
+                    cts = null;
+                }
+            });
         }
     }
 }
