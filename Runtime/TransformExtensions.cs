@@ -7,6 +7,9 @@ namespace vz777.Foundations
 {
     public static class TransformExtensions
     {
+        /// <summary>
+        /// Get the scene path of this transform.
+        /// </summary>
         public static string GetScenePath(this Transform transform)
         {
             var current = transform;
