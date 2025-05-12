@@ -1,4 +1,8 @@
 # Changelog
+## 0.2.2-fork.4
+- Added getting world transform from another parent function.
+- Stop StartDisposeTimer being awaitable since it's not.
+
 ## 0.2.2-fork.3
 - Added merge sub-meshes tool
 - Moved all tools under vz777 sub-menu
