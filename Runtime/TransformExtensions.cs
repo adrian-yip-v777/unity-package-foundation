@@ -30,7 +30,7 @@ namespace vz777.Foundations
         /// <summary>
         /// Get the world transform of the other parent.
         /// </summary>
-        public static (Vector3 position, Quaternion rotation, Vector3 scale) GetWorldTransformFromOtherParent(
+        public static TrsData GetWorldTransformFromOtherParent(
             this Transform transform, Transform otherParent)
         {
             var scaledPosition = new Vector3(
@@ -41,14 +41,9 @@ namespace vz777.Foundations
         
             var position = otherParent.position + otherParent.rotation * scaledPosition;
             var rotation = otherParent.rotation * transform.localRotation;
-            var parentScale = transform.parent ? transform.parent.lossyScale : Vector3.one;
-            var scale = new Vector3(
-                otherParent.lossyScale.x / parentScale.x * transform.localScale.x,
-                otherParent.lossyScale.y / parentScale.y * transform.localScale.y,
-                otherParent.lossyScale.z / parentScale.z * transform.localScale.z
-            );
-
-            return (position, rotation, scale);
-        } 
+            var scale = TransformUtils.GetLocalScaleFromOtherParent(transform.localScale, transform.parent, otherParent);
+            
+            return new TrsData(position, rotation, scale);
+        }
     }
 }
