@@ -1,4 +1,8 @@
 # Changelog
+## 0.3.0
+- Added blender quaternion convert fucntion.
+- Added two common interfaces (IInteractable, IShowBehavior)
+
 ## 0.2.2-fork.5
 - Moved TRS data from vz777's PolySpatials package to here.
 - Added GetScaleFromOtherParent function.
