@@ -1,6 +1,6 @@
 {
     "name": "vz777.Foundation",
-    "rootNamespace": "",
+    "rootNamespace": "vz777.Foundations",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
