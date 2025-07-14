@@ -3,7 +3,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace vz777.Foundations
+namespace vz777.Foundation
 {
     public static class TransformExtensions
     {
