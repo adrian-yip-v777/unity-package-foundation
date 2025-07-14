@@ -1,12 +1,12 @@
 {
   "name": "com.vz777.foundation",
-  "version": "0.3.0",
+  "version": "1.0.0",
   "displayName": "Visionaries Foundation",
   "description": "This is the foundation package for other packages.",
   "unity": "2019.1",
   "documentationUrl": "https://github.com/adrian-yip-v777/unity-package-foundation",
-  "changelogUrl": "https://github.com/adrian-yip-v777/unity-package-foundation/blob/0.3.0/CHANGELOG.md",
-  "licensesUrl": "https://github.com/adrian-yip-v777/unity-package-foundation/blob/0.3.0/LICENSE",
+  "changelogUrl": "https://github.com/adrian-yip-v777/unity-package-foundation/blob/1.0.0/CHANGELOG.md",
+  "licensesUrl": "https://github.com/adrian-yip-v777/unity-package-foundation/blob/1.0.0/LICENSE",
   "dependencies": {},
   "keywords": [
     "base",
