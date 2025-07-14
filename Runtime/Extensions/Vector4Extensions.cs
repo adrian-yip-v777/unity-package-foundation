@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace vz777.Foundations
+namespace vz777.Foundation
 {
 	public static class Vector4Extensions
 	{

@@ -1,6 +1,6 @@
 using UnityEngine.Events;
 
-namespace vz777.Foundations
+namespace vz777.Foundation
 {
 	/// <summary>
 	/// An interface that contains generic show and hide function, and should invoke the event afterward.

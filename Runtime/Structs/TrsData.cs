@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace vz777.Foundations
+namespace vz777.Foundation
 {
     /// <summary>
     /// Containing translation, rotation, and scale data.
