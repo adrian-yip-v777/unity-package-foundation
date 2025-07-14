@@ -1,6 +1,6 @@
 using System;
 
-namespace vz777.Foundations
+namespace vz777.Foundation
 {
     /// <summary>
     /// A common, basic disposing handling for an object.

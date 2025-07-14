@@ -1,4 +1,4 @@
-namespace vz777.Foundations
+namespace vz777.Foundation
 {
 	/// <summary>
 	/// An interface indicates that the object is interactable.

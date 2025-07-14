@@ -1,9 +1,13 @@
 using UnityEngine;
 
-namespace vz777.Foundations
+namespace vz777.Foundation
 {
     public class TransformUtils
     {
+        /// <summary>
+        /// Get the local scale of a transform from parent A to parent B.
+        /// Please note that non-uniform scale might not be working at the moment.
+        /// </summary>
         public static Vector3 GetLocalScaleFromOtherParent(Vector3 localScale, Transform parentA, Transform parentB)
         {
             Vector3 scale;

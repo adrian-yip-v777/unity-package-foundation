@@ -3,12 +3,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace vz777.Foundations
+namespace vz777.Foundation
 {
     /// <summary>
     /// Responsible for counting the reference for the object, then manually deal with the release method.
     /// </summary>
-    public abstract class RefCounter<T> : DisposableBase
+    public class RefCounter<T> : DisposableBase
     {
         /// <summary>
         /// The resource to check for the reference count.
