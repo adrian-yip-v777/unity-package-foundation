@@ -5,7 +5,7 @@ namespace vz777.Foundation
     /// <summary>
     /// A common, basic disposing handling for an object.
     /// </summary>
-    public class DisposableBase
+    public class DisposableBase : IDisposable
     {
         ~DisposableBase()
         {
