@@ -1,4 +1,12 @@
 # Changelog
+## 1.1.0
+- Added IPrefabDatabase and ScriptableObjectPrefabDatabase
+- Fixed DisposableBase not inherited from IDisposable
+
+## 1.0.0
+- Fixed namespace from Foundations to Foundation
+- Refactored and added documents
+
 ## 0.3.0
 - Added blender quaternion convert fucntion.
 - Added two common interfaces (IInteractable, IShowBehavior)
